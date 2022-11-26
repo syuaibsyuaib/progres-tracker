@@ -21,16 +21,17 @@
 		<div class="container">
 			<div class="mb-3">
 				<label class="form-label" for="nama_project">Project</label>
-				<input class="form-control" type="text" placeholder="Nama">
+				<input class="form-control" type="text" placeholder="Nama" id="nama_project" required>
 			</div>
 			<label class="form-label" for="inp_user">Panitia</label>
 			<div class="mb-3 input-group ">
 				<input class="form-control" type="text" name="" id="inp_user" placeholder="Nama">
-				<button class="btn btn-primary" id="add_user">+</button>
+				<input class="form-control" type="number" name="" id="inp_user_nip" placeholder="NIP/NIK">
+				<button type="button" class="btn btn-primary" id="add_user">+</button>
 			</div>
 			<ul class="list-group list-group-numbered mb-3" id="users"></ul>
 			<div class="text-end">
-				<button type="button" class="mb-3 btn btn-success">Simpan</button>
+				<button type="button" class="mb-3 btn btn-success" id="simpan_nama_project">Simpan</button>
 			</div>
 		</div>
 
@@ -45,14 +46,13 @@
 				<input class="form-control" type="text" name="" id="tambah_budget" placeholder="nama barang-jasa">
 			</div>
 			<div class="input-group mb-2">
-				<input class="form-control" type="number" name="" id="" placeholder="kuantitas">
-				<input class="form-control" type="number" name="" id="" placeholder="satuan">
-				<input class="form-control" type="number" name="" id="" placeholder="harga">
+				<input class="form-control" type="number" name="" id="inp_kuantitas" placeholder="kuantitas">
+				<input class="form-control" type="text" name="" id="inp_satuan" placeholder="satuan">
+				<input class="form-control" type="text" name="" id="inp_harga" placeholder="harga" pattern="[0-9]">
 			</div>
 			<div class="text-end">
 				<button type="button" class="btn btn-success">Simpan</button>
 			</div>
-
 		</section>
 
 		<hr>
@@ -73,13 +73,65 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 	<script>
 		$('#add_user').click(function () {
-			let newUser = $('#inp_user').val()
-			$('#users').append(`<li class="list-group-item position-relative">${newUser}<button type="button" class="btn rounded-pill" style="position:absolute;top:0;right:3%"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
-																																																																																																																																																																											  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-																																																																																																																																																																											  			  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-																																																																																																																																																																														  			</svg></button></li>`)
+			$('#users').append(`<li class="list-group-item position-relative">${inp_user.value} ( ${inp_user_nip.value} )<button onclick="hapusUser(this)" type="button" class="btn rounded-pill" style="position:absolute;top:0;right:1%"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
+			<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+			<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+			</svg></button></li>`)
 			$('#inp_user').val('')
+			$('#inp_user_nip').val('')
 		})
+
+		function hapusUser(e) {
+			$(e).parent().remove()
+		}
+
+		$('#simpan_nama_project').click(function (e) {
+			if ($('#nama_project').val() == '') {
+				$('#nama_project').focus()
+				return
+			}
+
+			if ($('#users').children().length == 0) {
+				$('#inp_user').focus()
+				return
+			}
+
+			alert('tersimpan')
+		})
+
+
+		// BUDGET
+		$('#inp_harga').keyup(function (e) {
+			// console.log()
+			// if (e.currentTarget.value.length / 3 > 1) {
+			// 	return
+			// }
+			let hasil = rupiah($(e.currentTarget).val())
+			// $(e.currentTarget).val(hasil.toString())
+			// console.log(e.currentTarget.value)
+
+		})
+
+		function rupiah(nominal) {
+			let banyakSeparator = Math.floor(nominal.length / 3)
+			let banyakAngkaTerakhir = nominal.length - (banyakSeparator * 3)
+
+			let arr = []
+			for (let i = 1; i <= banyakSeparator; i++) {
+				arr.push(nominal.substr(-3 * i, 3))
+			}
+
+			arr.push(nominal.substr(0, banyakAngkaTerakhir))
+
+			let cleanArr = arr.filter((a) => a)
+			// let hasil = ''
+			// for(let i = arr.length - 1; i < 0; i--){
+			let hasil = cleanArr.reverse().join(".")
+			// }
+
+			console.log(hasil)
+			return hasil
+		}
 	</script>
 </body>
 
