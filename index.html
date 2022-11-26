@@ -10,6 +10,13 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<style>
+		.form-check-input:checked {
+			background-color: #00ad17;
+			border-color: #0b8000;
+		}
+	</style>
 </head>
 
 <body>
@@ -43,13 +50,33 @@
 			</div>
 			<div class="input-control mb-2">
 				<label class="form-label" for="tambah_budget">Mata Anggaran</label>
-				<input class="form-control" type="text" name="" id="tambah_budget" placeholder="nama barang-jasa">
+				<input class="form-control" type="text" name="" id="nama_barang" placeholder="nama barang-jasa">
 			</div>
 			<div class="input-group mb-2">
-				<input class="form-control" type="number" name="" id="inp_kuantitas" placeholder="kuantitas">
-				<input class="form-control" type="text" name="" id="inp_satuan" placeholder="satuan">
-				<input class="form-control" type="text" name="" id="inp_harga" placeholder="harga" pattern="[0-9]">
+				<input required class="form-control" type="number" name="" id="inp_kuantitas" placeholder="kuantitas"
+					title="Kuantitas">
+				<input required class="form-control" type="text" name="" id="inp_satuan" placeholder="satuan"
+					title="Satuan">
+				<input required class="form-control" type="text" name="" id="inp_harga" placeholder="harga satuan"
+					title="Harga">
+				<button type="button" class="btn btn-primary" id="tambah_budget">+</button>
 			</div>
+			<table class="table table-hover mt-5 table-bordered" id="tabel_budget">
+				<thead class="bg-warning">
+					<tr>
+						<th scope="col">No.</th>
+						<th scope="col">Nama Barang/Jasa</th>
+						<th scope="col">Kuantitas</th>
+						<th scope="col">Satuan</th>
+						<th scope="col">Harga Satuan</th>
+						<th scope="col">Harga Total</th>
+						<th scope="col">Hapus</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
 			<div class="text-end">
 				<button type="button" class="btn btn-success">Simpan</button>
 			</div>
@@ -62,21 +89,72 @@
 					Kegiatan
 				</p>
 			</div>
-			persiapan <br>
+			<p>Persiapan</p>
+			<ul id="sortable" class="list-group">
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="me-auto">
+						<i class="fa-solid fa-grip-vertical me-2"></i>
+						<input class="form-check-input me-1" type="checkbox" value="">
+						Item 1
+					</div>
+					<span onclick="hapusPersiapan(this)" type="button">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
+					<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+					<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+					</svg>
+				</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="me-auto">
+						<i class="fa-solid fa-grip-vertical me-2"></i>
+						<input class="form-check-input me-1" type="checkbox" value="">
+						Item 2
+					</div>
+					<span onclick="hapusPersiapan(this)" type="button">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
+					<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+					<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+					</svg>
+				</span>
+				</li>
+				
 
-			pelaksanaan <br>
-			pelaporan
+			</ul>
+			<p>Pelaksanaan</p>
+
+			<p>Pelaporan</p>
 		</section>
 	</div>
 
 
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	<script src="https://kit.fontawesome.com/923e54134a.js" crossorigin="anonymous"></script>
 	<script>
+		$(function () {
+			$("#sortable").sortable();
+		});
+
 		$('#add_user').click(function () {
-			$('#users').append(`<li class="list-group-item position-relative">${inp_user.value} ( ${inp_user_nip.value} )<button onclick="hapusUser(this)" type="button" class="btn rounded-pill" style="position:absolute;top:0;right:1%"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
-			<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-			<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-			</svg></button></li>`)
+			if (inp_user.value == '') {
+				$(inp_user).focus()
+				return
+			} else if (inp_user_nip.value == '') {
+				$(inp_user_nip).focus()
+				return
+			}
+
+			$('#users').append(`<li class="list-group-item d-flex justify-content-between align-items-start">
+				<div class="me-auto ms-2">
+				${inp_user.value} ( ${inp_user_nip.value} )
+				</div>
+				<span onclick="hapusUser(this)" type="button">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
+					<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+					<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+					</svg>
+				</span>
+				</li>`)
 			$('#inp_user').val('')
 			$('#inp_user_nip').val('')
 		})
@@ -84,6 +162,19 @@
 		function hapusUser(e) {
 			$(e).parent().remove()
 		}
+
+		function hapusBudget(e) {
+			$(e).parents().remove('tr')
+			$('#tabel_budget tbody th').each(function (idx, item) {
+				$(item).text(idx + 1)
+			})
+		}
+		
+		function hapusPersiapan(e) {
+			$(e).parent().remove()
+		}
+
+
 
 		$('#simpan_nama_project').click(function (e) {
 			if ($('#nama_project').val() == '') {
@@ -101,15 +192,20 @@
 
 
 		// BUDGET
-		$('#inp_harga').keyup(function (e) {
-			// console.log()
-			// if (e.currentTarget.value.length / 3 > 1) {
-			// 	return
-			// }
-			let hasil = rupiah($(e.currentTarget).val())
-			// $(e.currentTarget).val(hasil.toString())
-			// console.log(e.currentTarget.value)
+		$('#inp_harga').keypress(function (e) {
+			//HANYA BOLEH ANGKA DAN BACKSPACE
+			if ((e.which < 48 || e.which > 57) && e.which != 8) {
+				e.preventDefault()
+				return false
+			}
+			// console.log(e.which)
+			$('#inp_harga').keyup(function (e) {
 
+				let angka = ($(e.currentTarget).val()).replace(/\./g, "")
+				let hasil = rupiah(angka)
+
+				$(e.currentTarget).val(hasil)
+			})
 		})
 
 		function rupiah(nominal) {
@@ -129,9 +225,49 @@
 			let hasil = cleanArr.reverse().join(".")
 			// }
 
-			console.log(hasil)
+			// console.log(hasil)
 			return hasil
 		}
+
+		$('#tambah_budget').click(function (e) {
+			if (nama_barang.value == "") {
+				$(nama_barang).focus()
+				return
+			} else if (inp_kuantitas.value == "") {
+				$(inp_kuantitas).focus()
+				return
+			} else if (inp_satuan.value == "") {
+				$(inp_satuan).focus()
+				return
+			} else if (inp_harga.value == "") {
+				$(inp_harga).focus()
+				return
+			}
+
+
+			$('#tabel_budget tbody').append(
+				`<tr>
+					<th scope="row">${$('#tabel_budget tbody tr').length + 1}</th>
+					<td>${nama_barang.value}</td>
+					<td>${inp_kuantitas.value}</td>
+					<td>${inp_satuan.value}</td>
+					<td>${inp_harga.value}</td>
+					<td>${((inp_harga.value).replace(/\./g, "") * inp_kuantitas.value).toLocaleString('id-ID')}</td>
+					<td class="text-center"><span onclick="hapusBudget(this)" type="button">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
+					<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+					<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+					</svg>
+				</span></td>
+				</tr>`
+			)
+
+			nama_barang.value = ""
+			inp_kuantitas.value = ""
+			inp_satuan.value = ""
+			inp_harga.value = ""
+		})
+
 	</script>
 </body>
 
