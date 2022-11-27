@@ -16,14 +16,65 @@
 			background-color: #00ad17;
 			border-color: #0b8000;
 		}
+
+		.main-footer {
+			background-color: #fff;
+			border-top: 1px solid #dee2e6;
+			color: #869099;
+			padding: 1rem;
+		}
 	</style>
 </head>
 
 <body>
-	<div class="container border-bottom border-5 border-danger border-opacity-25 bg-warning text-light p-3 mb-3">
-		<p class="fs-1 fw-bold mb-0">Progress Tracker</p>
-		<p class="fs-6 fst-italic fw-light">Atur dan pantau proyek dengan mudah</p>
+	<div class="bg-warning text-light p-3">
+		<div class="row">
+			<div class="col-3 text-center">
+				<img src="img/DINAS PENDIDIKAN STROKE LEBAR.png" class="img-fluid w-75">
+			</div>
+			<div class="col">
+				<p class="fs-1 fw-bold mb-0">Progress Tracker</p>
+				<p class="fs-6 fst-italic fw-light">Atur dan pantau proyek dengan mudah</p>
+			</div>
+		</div>
 	</div>
+	<nav class="border-bottom border-5 border-dark border-opacity-25 navbar sticky-top navbar-expand-lg navbar-dark bg-primary mb-3">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Navbar</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Link</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							Dropdown
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">Action</a></li>
+							<li><a class="dropdown-item" href="#">Another action</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="#">Something else here</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link disabled">Disabled</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 	<div class="container">
 		<div class="container">
 			<div class="mb-3">
@@ -90,41 +141,37 @@
 				</p>
 			</div>
 			<p>Persiapan</p>
-			<ul id="sortable" class="list-group">
+			<ul id="list_persiapan" class="list-group">
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="me-auto">
-						<i class="fa-solid fa-grip-vertical me-2"></i>
+						<span class="text-warning">
+							<i class="fa-solid fa-grip-vertical me-2"></i>
+						</span>
 						<input class="form-check-input me-1" type="checkbox" value="">
 						Item 1
 					</div>
 					<span onclick="hapusPersiapan(this)" type="button">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
-					<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-					<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-					</svg>
-				</span>
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
+							<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+							<path
+								d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+						</svg>
+					</span>
 				</li>
-				<li class="list-group-item d-flex justify-content-between align-items-start">
-					<div class="me-auto">
-						<i class="fa-solid fa-grip-vertical me-2"></i>
-						<input class="form-check-input me-1" type="checkbox" value="">
-						Item 2
-					</div>
-					<span onclick="hapusPersiapan(this)" type="button">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
-					<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-					<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-					</svg>
-				</span>
-				</li>
-				
-
 			</ul>
 			<p>Pelaksanaan</p>
 
 			<p>Pelaporan</p>
 		</section>
 	</div>
+	<footer class="main-footer">
+		<strong>Copyright © 2022 <a href="#">Syuaib</a>.</strong>
+		All rights reserved.
+		<div class="float-right d-none d-sm-inline-block">
+			<b>Version</b> 1.0.0
+		</div>
+	</footer>
 
 
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
@@ -132,7 +179,7 @@
 	<script src="https://kit.fontawesome.com/923e54134a.js" crossorigin="anonymous"></script>
 	<script>
 		$(function () {
-			$("#sortable").sortable();
+			$("#list_persiapan").sortable();
 		});
 
 		$('#add_user').click(function () {
@@ -169,7 +216,7 @@
 				$(item).text(idx + 1)
 			})
 		}
-		
+
 		function hapusPersiapan(e) {
 			$(e).parent().remove()
 		}
