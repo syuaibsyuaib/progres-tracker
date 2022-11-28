@@ -24,27 +24,31 @@
 			padding: 1rem;
 		}
 
-@media only screen and (min-width: 600px) {
-.judul {
-text-align:left
-}
-}
+		@media (min-width: 768px) {
+			.judul {
+				text-align: left!important
+			}
+			.logo{
+				min-width: 254px;
+			}
+		}
 	</style>
 </head>
 
 <body>
 	<div class="bg-warning text-light p-3">
-<div class="row">
-<div class="col-md-2 align-middle text-center">
-				<img src="img/DINAS PENDIDIKAN STROKE LEBAR.png" class="img-fluid w-75">
-</div>
+		<div class="row align-items-center">
+			<div class="col-md-2 align-middle text-center logo">
+				<img src="img/DINAS PENDIDIKAN STROKE LEBAR.png" class="img-fluid w-75" style="max-width:199px">
+			</div>
 			<div class="col text-center judul">
 				<p class="fs-1 fw-bold mb-0">Progress Tracker</p>
 				<p class="fs-6 fst-italic fw-light">Atur dan pantau proyek dengan mudah</p>
 			</div>
 		</div>
 	</div>
-	<nav class="border-bottom border-5 border-dark border-opacity-25 navbar sticky-top navbar-expand-lg navbar-dark bg-primary mb-3">
+	<nav
+		class="border-bottom border-5 border-dark border-opacity-25 navbar sticky-top navbar-expand-lg navbar-dark bg-primary mb-3">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#">Navbar</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -105,7 +109,7 @@ text-align:left
 			<div class="text-center">
 				<p class="fw-bold fs-2 mb-3">Keuangan</p>
 			</div>
-<label class="form-label" for="nama_barang">Mata Anggaran</label>
+			<label class="form-label" for="nama_barang">Mata Anggaran</label>
 			<div class="input-group mb-2">
 				<input class="form-control" type="text" name="" id="nama_barang" placeholder="nama barang-jasa">
 			</div>
@@ -118,24 +122,24 @@ text-align:left
 					title="Harga">
 				<button type="button" class="btn btn-primary" id="tambah_budget">+</button>
 			</div>
-<div class="table-responsive mt-5">
-			<table class="table table-hover" id="tabel_budget">
-				<thead class="bg-warning">
-					<tr>
-						<th scope="col">No.</th>
-						<th scope="col">Nama Barang/Jasa</th>
-						<th scope="col">Kuantitas</th>
-						<th scope="col">Satuan</th>
-						<th scope="col">Harga Satuan</th>
-						<th scope="col">Harga Total</th>
-						<th scope="col">Hapus</th>
-					</tr>
-				</thead>
-				<tbody>
+			<div class="table-responsive mt-5">
+				<table class="table table-hover" id="tabel_budget">
+					<thead class="bg-warning">
+						<tr>
+							<th scope="col">No.</th>
+							<th scope="col">Nama Barang/Jasa</th>
+							<th scope="col">Kuantitas</th>
+							<th scope="col">Satuan</th>
+							<th scope="col">Harga Satuan</th>
+							<th scope="col">Harga Total</th>
+							<th scope="col">Hapus</th>
+						</tr>
+					</thead>
+					<tbody>
 
-				</tbody>
-			</table>
-</div>
+					</tbody>
+				</table>
+			</div>
 			<div class="text-end">
 				<button type="button" class="btn btn-success">Simpan</button>
 			</div>
@@ -283,7 +287,7 @@ text-align:left
 			// for(let i = arr.length - 1; i < 0; i--){
 			let hasil = cleanArr.reverse().join(".")
 			//}
-alert(hasil)
+			alert(hasil)
 			return hasil
 		}
 
