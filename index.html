@@ -415,6 +415,31 @@
 			modalBarjasTerpakai.show()
 		}
 
+function simpanLocal(data){
+let db = {
+"id" : 1,
+"nama proyek": "tes proyek",
+"panitia" : [
+{"nama":"org1", "id":"7372"},
+{"nama":"org2", "id":"19861217"},
+],
+"budget" : {
+"uraian":[
+{"nama barjas": "HVS", "kuantitas":2, "satuan": "rim", "harga satuan":65000, "total":130000},
+{"nama barjas": "id card", "kuantitas":2, "satuan": "bungkus", "harga satuan":20000, "total":40000}
+],
+"total":170000
+},
+"kegiatan":{
+"persiapan":[],
+"pelaksanaan":[],
+"pelaporan":[]
+}
+}
+
+localStorage.setItem(JSON.stringify(db))
+}
+
 	</script>
 </body>
 
