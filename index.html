@@ -128,7 +128,7 @@
 					title="Kuantitas">
 				<input required class="form-control" type="text" name="" id="inp_satuan" placeholder="satuan"
 					title="Satuan">
-				<input required class="form-control" type="text" name="" id="inp_harga" placeholder="harga satuan"
+				<input required class="form-control" type="number" name="" id="inp_harga" placeholder="harga satuan"
 					title="Harga">
 				<button type="button" class="btn btn-primary" id="tambah_budget">+</button>
 			</div>
@@ -290,7 +290,7 @@
 
 				let angka = ($(e.currentTarget).val()).replace(/\./g, "")
 				let hasil = rupiah(angka)
-
+				// alert(hasil)
 				$(e.currentTarget).val(hasil)
 			})
 		})
@@ -311,7 +311,7 @@
 			// for(let i = arr.length - 1; i < 0; i--){
 			let hasil = cleanArr.reverse().join(".")
 			//}
-			alert(hasil)
+			
 			return hasil
 		}
 
