@@ -416,7 +416,7 @@
 		}
 
 function simpanLocal(data){
-let db = {
+let db = {[
 "id" : 1,
 "nama proyek": "tes proyek",
 "panitia" : [
@@ -435,9 +435,9 @@ let db = {
 "pelaksanaan":[],
 "pelaporan":[]
 }
-}
+]}
 
-localStorage.setItem(JSON.stringify(db))
+localStorage.setItem("proyek", JSON.stringify(db))
 }
 
 	</script>
