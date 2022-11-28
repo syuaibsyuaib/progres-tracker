@@ -24,11 +24,21 @@
 			padding: 1rem;
 		}
 
+		.list-group-item {
+			cursor: move;
+		}
+
+		.ghost {
+			opacity: .5;
+			background: #C8EBFB;
+		}
+
 		@media (min-width: 768px) {
 			.judul {
-				text-align: left!important
+				text-align: left !important
 			}
-			.logo{
+
+			.logo {
 				min-width: 254px;
 			}
 		}
@@ -175,6 +185,23 @@
 						</svg>
 					</span>
 				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="me-auto">
+						<span class="text-warning">
+							<i class="fa-solid fa-grip-vertical me-2"></i>
+						</span>
+						<input class="form-check-input me-1" type="checkbox" value="">
+						Item 1
+					</div>
+					<span onclick="hapusPersiapan(this)" type="button">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
+							<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+							<path
+								d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+						</svg>
+					</span>
+				</li>
 			</ul>
 			<p>Pelaksanaan</p>
 
@@ -191,12 +218,9 @@
 
 
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 	<script src="https://kit.fontawesome.com/923e54134a.js" crossorigin="anonymous"></script>
 	<script>
-		$(function () {
-			$("#list_persiapan").sortable();
-		});
 
 		$('#add_user').click(function () {
 			if (inp_user.value == '') {
@@ -329,6 +353,11 @@
 			inp_satuan.value = ""
 			inp_harga.value = ""
 		})
+
+		new Sortable(list_persiapan, {
+			animation: 150,
+			ghostClass: 'ghost'
+		});
 
 	</script>
 </body>
