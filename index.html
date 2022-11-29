@@ -420,7 +420,7 @@
 				"id": "",
 				"nama proyek": data.namaProyek,
 				"panitia": [
-					{ "id": "", "nama": data.panitia.nama }
+					{ "id": data.panitia.id, "nama": data.panitia.nama }
 				],
 				"budget": {
 					"uraian": [
@@ -432,32 +432,32 @@
 					"persiapan": [
 						{
 							"id": "",
-							"nama kegiatan": "",
-							"barjas": [{ "idf": "", "dibutuhkan": "", "terpakai": "" }],
-							"total barjas": "",
-							"status": ""
+							"nama kegiatan": data.kegiatan.persiapan["nama kegiatan"],
+							"barjas": [{ "idf": "", "dibutuhkan": data.kegiatan.persiapan.barjas.dibutuhkan, "terpakai": data.kegiatan.persiapan.barjas.terpakai }],
+							"total barjas": data.kegiatan.persiapan.barjas["total barjas"],
+							"status": data.kegiatan.persiapan.status
 						}
 					],
 					"pelaksanaan": [
 						{
 							"id": "",
-							"nama kegiatan": "",
-							"barjas": [{ "idf": "", "dibutuhkan": "", "terpakai": "" }],
-							"total barjas": "",
-							"status": ""
+							"nama kegiatan": data.kegiatan.pelaksanaan["nama kegiatan"],
+							"barjas": [{ "idf": "", "dibutuhkan": data.kegiatan.pelaksanaan.barjas.dibutuhkan, "terpakai": data.kegiatan.pelaksanaan.barjas.terpakai }],
+							"total barjas": data.kegiatan.pelaksanaan["total barjas"],
+							"status": data.kegiatan.pelaksanaan.status
 						}
 					],
 					"pelaporan": [
 						{
 							"id": "",
-							"nama kegiatan": "",
-							"barjas": [{ "idf": "", "dibutuhkan": "", "terpakai": "" }],
-							"total barjas": "",
-							"status": ""
+							"nama kegiatan": data.kegiatan.pelaporan["nama kegiatan"],
+							"barjas": [{ "idf": "", "dibutuhkan": data.kegiatan.pelaporan.barjas.dibutuhkan, "terpakai": data.kegiatan.pelaporan.barjas.terpakai }],
+							"total barjas": data.kegiatan.pelaporan["total barjas"],
+							"status": data.kegiatan.pelaporan.status
 						}
 					]
 				},
-				"status":""
+				"status": data.status
 			}]
 
 			localStorage.setItem("proyek", JSON.stringify(db))
