@@ -100,6 +100,7 @@
 			<div class="mb-3">
 				<label class="form-label" for="nama_project">Project</label>
 				<input class="form-control" type="text" placeholder="Nama" id="nama_project" required>
+				<input type="text" name="" id="id_project" hidden>
 			</div>
 			<label class="form-label" for="inp_user">Panitia</label>
 			<div class="mb-3 input-group ">
@@ -113,9 +114,9 @@
 			</div>
 		</div>
 
-		<hr>
 		<!-- ISI BUDGET -->
-		<section>
+		<section style="display: none" id="section_budget">
+			<hr>
 			<div class="text-center">
 				<p class="fw-bold fs-2 mb-3">Keuangan</p>
 			</div>
@@ -155,9 +156,9 @@
 			</div>
 		</section>
 
-		<hr>
 		<!-- KEGIATAN -->
-		<section>
+		<section style="display: none" id="section_kegiatan">
+			<hr>
 			<div class="text-center">
 				<p class="fw-bold fs-2 mb-3">
 					Kegiatan
@@ -222,6 +223,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 	<script src="https://kit.fontawesome.com/923e54134a.js" crossorigin="anonymous"></script>
+	<script src="template.js"></script>
 	<script>
 
 		$('#add_user').click(function () {
@@ -234,8 +236,11 @@
 			}
 
 			$('#users').append(`<li class="list-group-item d-flex justify-content-between align-items-start">
-				<div class="me-auto ms-2">
-				${inp_user.value} ( ${inp_user_nip.value} )
+				<div class="me-2 ms-2 nama-user">
+					${inp_user.value}
+				</div>
+				<div class="me-auto nip-user">
+					( ${inp_user_nip.value} )
 				</div>
 				<span onclick="hapusUser(this)" type="button">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
@@ -263,23 +268,41 @@
 				return
 			}
 
-			alert('tersimpan')
+			$('#users .nama-user').each(function (idx, item) {
+				let usersObj = { "id": "", "nama": "" }
+
+				usersObj.nama = $(item)[0].innerText
+				usersObj.id = $('#users .nip-user')[idx].innerText.substr(1, $('#users .nip-user')[idx].innerText.length - 2).trim()
+				templateDb.panitia.push(usersObj)
+			})
+
+			templateDb["nama proyek"] = $('#nama_project').val()
+
+
+			kirimDb(templateDb)
+				.then(res => {
+					id_project.value = res.idProyek
+					nama_project.disabled = true
+					templateDb.id = res.idProyek
+					console.log(templateDb)
+					$(section_budget).show("slow")
+				})
+
 		})
 
+		////////////////////////////////////// BUDGET ///////////////////////////////////
 
-		// ########### BUDGET ###########
 		$('#inp_harga').keypress(function (e) {
 			//HANYA BOLEH ANGKA DAN BACKSPACE
 			if ((e.which < 48 || e.which > 57) && e.which != 8) {
 				e.preventDefault()
 				return false
 			}
-			// console.log(e.which)
+
 			$('#inp_harga').keyup(function (e) {
 
 				let angka = ($(e.currentTarget).val()).replace(/\./g, "")
 				let hasil = rupiah(angka)
-				// alert(hasil)
 				$(e.currentTarget).val(hasil)
 			})
 		})
@@ -294,13 +317,8 @@
 			}
 
 			arr.push(nominal.substr(0, banyakAngkaTerakhir))
-
 			let cleanArr = arr.filter((a) => a)
-			// let hasil = ''
-			// for(let i = arr.length - 1; i < 0; i--){
 			let hasil = cleanArr.reverse().join(".")
-			//}
-
 			return hasil
 		}
 
@@ -350,7 +368,57 @@
 			})
 		}
 
-		// ############## KEGIATAN ##############
+		$(simpan_budget).click(function (e) {
+			if ($("#tabel_budget tbody tr").length == 0) {
+				$(nama_barang).focus()
+				return
+			}
+
+			let budgetObj = {
+				"uraian": [],
+				"total": ""
+			}
+
+
+			$("#tabel_budget tbody tr").each(function (idx, item) {
+				let namaBarjas = $(item).children().eq(1).text()
+				let kuantitas = $(item).children().eq(2).text()
+				let satuan = $(item).children().eq(3).text()
+				let hargaSatuan = $(item).children().eq(4).text()
+				let hargaTotal = $(item).children().eq(5).text()
+
+				let uraianBudget = { "id": "", "nama barjas": "", "kuantitas": "", "satuan": "", "harga satuan": "", "total": "" }
+
+				uraianBudget.id = idx
+				uraianBudget["nama barjas"] = namaBarjas
+				uraianBudget.kuantitas = kuantitas * 1
+				uraianBudget.satuan = satuan
+				uraianBudget["harga satuan"] = (hargaSatuan).replace(/\./g, "") * 1
+				uraianBudget.total = (hargaTotal).replace(/\./g, "") * 1
+
+				budgetObj.uraian.push(uraianBudget)
+			})
+
+			// budgetObj.total = budgetObj.uraian.reduce((val, item) => {
+			// 	return val + item.total
+			// }, 0)
+
+			budgetObj.total = budgetObj.uraian.reduce((total, num) => {
+				// console.log(num.total)
+				// let angka = (num.total).replace(/\./g, "")
+				return num.total + total
+			}, 0);
+
+			templateDb.budget = budgetObj
+
+			kirimDb(templateDb)
+				.then(res => {
+					console.log(res)
+					$(section_kegiatan).show("slow")
+				})
+		})
+
+		/////////////////////////////////// KEGIATAN /////////////////////////////////////
 		function hapusPersiapan(e) {
 			$(e).parent().remove()
 		}
@@ -415,54 +483,34 @@
 			modalBarjasTerpakai.show()
 		}
 
-		function simpanLocal(data) {
-			let db = [{
-				"id": "",
-				"nama proyek": data.namaProyek,
-				"panitia": [
-					{ "id": data.panitia.id, "nama": data.panitia.nama }
-				],
-				"budget": {
-					"uraian": [
-						{ "id": "", "nama barjas": data.budget.uraian["nama barjas"], "kuantitas": data.budget.uraian.kuantitas, "satuan": data.budget.uraian.satuan, "harga satuan": data.budget.uraian["harga satuan"], "total": data.budget.uraian["uraian"] },
-					],
-					"total": data.budget["total"]
-				},
-				"kegiatan": {
-					"persiapan": [
-						{
-							"id": "",
-							"nama kegiatan": data.kegiatan.persiapan["nama kegiatan"],
-							"barjas": [{ "idf": "", "dibutuhkan": data.kegiatan.persiapan.barjas.dibutuhkan, "terpakai": data.kegiatan.persiapan.barjas.terpakai }],
-							"total barjas": data.kegiatan.persiapan.barjas["total barjas"],
-							"status": data.kegiatan.persiapan.status
-						}
-					],
-					"pelaksanaan": [
-						{
-							"id": "",
-							"nama kegiatan": data.kegiatan.pelaksanaan["nama kegiatan"],
-							"barjas": [{ "idf": "", "dibutuhkan": data.kegiatan.pelaksanaan.barjas.dibutuhkan, "terpakai": data.kegiatan.pelaksanaan.barjas.terpakai }],
-							"total barjas": data.kegiatan.pelaksanaan["total barjas"],
-							"status": data.kegiatan.pelaksanaan.status
-						}
-					],
-					"pelaporan": [
-						{
-							"id": "",
-							"nama kegiatan": data.kegiatan.pelaporan["nama kegiatan"],
-							"barjas": [{ "idf": "", "dibutuhkan": data.kegiatan.pelaporan.barjas.dibutuhkan, "terpakai": data.kegiatan.pelaporan.barjas.terpakai }],
-							"total barjas": data.kegiatan.pelaporan["total barjas"],
-							"status": data.kegiatan.pelaporan.status
-						}
-					]
-				},
-				"status": data.status
-			}]
+		function localDb(data) {
+			if (data == "baca") {
+				let idProject = $(id_project).val()
+				if (localStorage.getItem("proyek")) {
+					let db = JSON.parse(localStorage.getItem("proyek"))
 
-			localStorage.setItem("proyek", JSON.stringify(db))
+					let hasil = db.filter(item => {
+						if (item.id == idProject) {
+							return item
+						}
+					})
+
+					return hasil
+				}
+			}
+
+			localStorage.setItem("proyek", JSON.stringify([data]))
+			return data
 		}
 
+		function kirimDb(data) {
+			return fetch(urlDb, {
+				method: "POST",
+				body: JSON.stringify(data)
+			}).then(res => {
+				return res.json()
+			})
+		}
 	</script>
 </body>
 
