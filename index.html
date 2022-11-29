@@ -409,36 +409,59 @@
 			ghostClass: 'ghost'
 		});
 
-		
+
 		function barjasTerpakai(e) {
 			const modalBarjasTerpakai = new bootstrap.Modal('#modal_barjas_terpakai')
 			modalBarjasTerpakai.show()
 		}
 
-function simpanLocal(data){
-let db = [{
-"id" : 1,
-"nama proyek": "tes proyek",
-"panitia" : [
-{"nama":"org1", "id":"7372"},
-{"nama":"org2", "id":"19861217"},
-],
-"budget" : {
-"uraian":[
-{"nama barjas": "HVS", "kuantitas":2, "satuan": "rim", "harga satuan":65000, "total":130000},
-{"nama barjas": "id card", "kuantitas":2, "satuan": "bungkus", "harga satuan":20000, "total":40000}
-],
-"total":170000
-},
-"kegiatan":{
-"persiapan":[],
-"pelaksanaan":[],
-"pelaporan":[]
-}
-}]
+		function simpanLocal(data) {
+			let db = [{
+				"id": "",
+				"nama proyek": data.namaProyek,
+				"panitia": [
+					{ "id": "", "nama": data.panitia.nama }
+				],
+				"budget": {
+					"uraian": [
+						{ "id": "", "nama barjas": data.budget.uraian["nama barjas"], "kuantitas": data.budget.uraian.kuantitas, "satuan": data.budget.uraian.satuan, "harga satuan": data.budget.uraian["harga satuan"], "total": data.budget.uraian["uraian"] },
+					],
+					"total": data.budget["total"]
+				},
+				"kegiatan": {
+					"persiapan": [
+						{
+							"id": "",
+							"nama kegiatan": "",
+							"barjas": [{ "idf": "", "dibutuhkan": "", "terpakai": "" }],
+							"total barjas": "",
+							"status": ""
+						}
+					],
+					"pelaksanaan": [
+						{
+							"id": "",
+							"nama kegiatan": "",
+							"barjas": [{ "idf": "", "dibutuhkan": "", "terpakai": "" }],
+							"total barjas": "",
+							"status": ""
+						}
+					],
+					"pelaporan": [
+						{
+							"id": "",
+							"nama kegiatan": "",
+							"barjas": [{ "idf": "", "dibutuhkan": "", "terpakai": "" }],
+							"total barjas": "",
+							"status": ""
+						}
+					]
+				},
+				"status":""
+			}]
 
-localStorage.setItem("proyek", JSON.stringify(db))
-}
+			localStorage.setItem("proyek", JSON.stringify(db))
+		}
 
 	</script>
 </body>
