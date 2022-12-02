@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Progress Tracker</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+		crossorigin="anonymous"></script>
+	<style>
+		.form-check-input:checked {
+			background-color: #00ad17;
+			border-color: #0b8000;
+		}
+
+		.main-footer {
+			background-color: #fff;
+			border-top: 1px solid #dee2e6;
+			color: #869099;
+			padding: 1rem;
+		}
+
+		.list-kegiatan {
+			cursor: grab;
+		}
+
+		.ghost {
+			opacity: .5;
+			background: #C8EBFB;
+		}
+
+		@media (min-width: 768px) {
+			.judul {
+				text-align: left !important
+			}
+
+			.logo {
+				min-width: 254px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="bg-warning text-light p-3">
+		<div class="row align-items-center">
+			<div class="col-md-2 align-middle text-center logo">
+				<img src="img/DINAS PENDIDIKAN STROKE LEBAR.png" class="img-fluid w-75" style="max-width:199px">
+			</div>
+			<div class="col text-center judul">
+				<p class="fs-1 fw-bold mb-0">Progress Tracker</p>
+				<p class="fs-6 fst-italic fw-light">Atur dan pantau proyek dengan mudah</p>
+			</div>
+		</div>
+	</div>
+	<nav
+		class="border-bottom border-5 border-dark border-opacity-25 navbar sticky-top navbar-expand-lg navbar-dark bg-primary mb-3">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Navbar</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Link</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							Dropdown
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">Action</a></li>
+							<li><a class="dropdown-item" href="#">Another action</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="#">Something else here</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link disabled">Disabled</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		<!-- NAMA PROYEK -->
+		<div class="container">
+			<div class="text-end">
+				<p class="small">
+					<em>
+						Parepare, <span id="timestamp">... .... ...</span>
+					</em>
+				</p>
+			</div>
+			<div class="mb-3">
+				<label class="form-label fw-bold" for="bidang">Bidang</label>
+				<select class="form-select mb-3" aria-label="Bidang" id="bidang">
+					<option>PMGTK</option>
+					<option>DIKDAS</option>
+					<option>PAUD</option>
+					<option>UMUM</option>
+					<option>BUDAYA</option>
+				</select>
+				<label class="form-label fw-bold" for="nama_project">Project</label>
+				<input class="form-control mb-3" type="text" placeholder="Nama" id="nama_project" required>
+				<label class="form-label fw-bold" for="tgl_project">Tanggal Pelaksanaan</label>
+				<input class="form-control" type="date" placeholder="Tanggal Pelaksanaan" id="tgl_project" required>
+				<input type="text" name="" id="id_project" hidden>
+			</div>
+			<label class="form-label fw-bold" for="inp_user">Panitia</label>
+			<div class="mb-3 input-group ">
+				<input class="form-control" type="text" name="" id="inp_user" placeholder="Nama">
+				<input class="form-control" type="number" name="" id="inp_user_nip" placeholder="NIP/NIK">
+				<select class="form-select" aria-label="Posisi" id="posisi_user">
+					<option>Anggota</option>
+					<option>Bendahara</option>
+					<option>Sekretaris</option>
+					<option>Ketua</option>
+					<option>Penanggung Jawab</option>
+				</select>
+				<button type="button" class="btn btn-primary" id="add_user">+</button>
+			</div>
+			<ul class="list-group list-group-numbered mb-3" id="users"></ul>
+			<div class="text-end">
+				<button type="button" class="mb-3 btn btn-success" id="simpan_nama_project">Simpan</button>
+			</div>
+		</div>
+
+		<!-- ISI BUDGET -->
+		<section id="section_budget">
+			<hr>
+			<div class="text-center">
+				<p class="fw-bold fs-2 mb-3">Keuangan</p>
+			</div>
+			<label class="form-label" for="nama_barang">Mata Anggaran</label>
+			<div class="input-group mb-2">
+				<input class="form-control" type="text" name="" id="nama_barang" placeholder="nama barang-jasa">
+			</div>
+			<div class="input-group mb-2">
+				<input required class="form-control" type="number" name="" id="inp_kuantitas" placeholder="kuantitas"
+					title="Kuantitas">
+				<input required class="form-control" type="text" name="" id="inp_satuan" placeholder="satuan"
+					title="Satuan">
+				<input required class="form-control" type="number" name="" id="inp_harga" placeholder="harga satuan"
+					title="Harga">
+				<button type="button" class="btn btn-primary" id="tambah_budget">+</button>
+			</div>
+			<div class="table-responsive mt-5">
+				<table class="table table-hover" id="tabel_budget">
+					<thead class="bg-warning text-center align-middle">
+						<tr>
+							<th scope="col">No.</th>
+							<th scope="col">Nama Barang/Jasa</th>
+							<th scope="col">Kuantitas</th>
+							<th scope="col">Satuan</th>
+							<th scope="col">Harga Satuan</th>
+							<th scope="col">Harga Total</th>
+							<th scope="col">Hapus</th>
+						</tr>
+					</thead>
+					<tbody>
+
+					</tbody>
+				</table>
+			</div>
+			<div class="text-end">
+				<button type="button" class="btn btn-success" id="simpan_budget">Simpan</button>
+			</div>
+		</section>
+
+		<!-- KEGIATAN -->
+		<section id="section_kegiatan">
+			<hr>
+			<div class="text-center">
+				<p class="fw-bold fs-2 mb-3">
+					Kegiatan
+				</p>
+			</div>
+			<p class="fw-bold">Persiapan</p>
+			<div class="input-group mb-2">
+				<input class="form-control" type="text" name="" id="nama_persiapan" placeholder="nama kegiatan">
+				<button type="button" class="btn btn-primary" id="tambah_persiapan">+</button>
+			</div>
+			<ul id="list_persiapan" class="list-group">
+
+			</ul>
+			<hr class="text-danger">
+			<p class="fw-bold">Pelaksanaan</p>
+			<div class="input-group mb-2">
+				<input class="form-control" type="text" name="" id="nama_pelaksanaan" placeholder="nama kegiatan">
+				<button type="button" class="btn btn-primary" id="tambah_pelaksanaan">+</button>
+			</div>
+			<ul id="list_pelaksanaan" class="list-group">
+
+			</ul>
+			<hr class="text-danger">
+			<p class="fw-bold">Pelaporan</p>
+			<div class="input-group mb-2">
+				<input class="form-control" type="text" name="" id="nama_pelaporan" placeholder="nama kegiatan">
+				<button type="button" class="btn btn-primary" id="tambah_pelaporan">+</button>
+			</div>
+			<ul id="list_pelaporan" class="list-group">
+
+			</ul>
+			<div class="text-end">
+				<button type="button" class="mb-3 btn btn-success" id="simpan_kegiatan">Simpan</button>
+			</div>
+		</section>
+	</div>
+	<footer class="main-footer">
+		<strong>Copyright © 2022 <a href="#">Syuaib</a>.</strong>
+		All rights reserved.
+		<div class="float-right d-none d-sm-inline-block">
+			<b>Version</b> 1.0.0
+		</div>
+	</footer>
+
+	<!-- Modal barjasTerpakai-->
+	<div class="modal fade" id="modal_barjas_terpakai" tabindex="-1" aria-labelledby="modal_barjas_terpakai_label"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="modal_barjas_terpakai_label">Kebutuhan Barjas</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="modal_kebutuhan_barjas">
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+					<button type="button" class="btn btn-primary">Simpan</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+	<script src="https://kit.fontawesome.com/923e54134a.js" crossorigin="anonymous"></script>
+	<script src="template.js"></script>
+	<script>
+
+		$('#add_user').click(function () {
+			if (inp_user.value == '') {
+				$(inp_user).focus()
+				return
+			} else if (inp_user_nip.value == '') {
+				$(inp_user_nip).focus()
+				return
+			}
+
+			$('#users').append(`<li class="list-group-item d-flex justify-content-between align-items-start">
+				<div class="me-2 ms-2 nama-user">
+					${inp_user.value}
+				</div>
+				<div class="me-2 ms-2 nip-user">
+					( ${inp_user_nip.value} )
+				</div>
+				<div class="me-auto posisi-user">
+					( ${posisi_user.value} )
+				</div>
+				<span onclick="hapusUser(this)" type="button">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
+					<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+					<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+					</svg>
+				</span>
+				</li>`)
+			$('#inp_user').val('')
+			$('#inp_user_nip').val('')
+		})
+
+		function hapusUser(e) {
+			$(e).parent().remove()
+		}
+
+		$('#simpan_nama_project').click(function (e) {
+			if ($('#nama_project').val() == '') {
+				$('#nama_project').focus()
+				return
+			}
+
+			if ($('#users').children().length == 0) {
+				$('#inp_user').focus()
+				return
+			}
+
+			$('#users .nama-user').each(function (idx, item) {
+				let usersObj = { "id": "", "nama": "", "posisi": "" }
+
+				usersObj.nama = $(item)[0].innerText
+				usersObj.id = $('#users .nip-user')[idx].innerText.substr(1, $('#users .nip-user')[idx].innerText.length - 2).trim()
+				usersObj.posisi = $('#users .posisi-user')[idx].innerText.substr(1, $('#users .posisi-user')[idx].innerText.length - 2).trim()
+				templateDb.panitia.push(usersObj)
+			})
+
+			templateDb["nama proyek"] = $('#nama_project').val()
+
+			// JIKA sudah ada di LOCAL maka:
+			// APAKAH ID proyek ini sama dengan ID proyek di local (cari)
+			//  
+
+				kirimDb(templateDb)
+					.then(res => {
+						id_project.value = res.idProyek
+						nama_project.disabled = true
+						bidang.disabled = true
+						templateDb.id = res.idProyek
+						console.log(templateDb)
+						$(section_budget).show("slow")
+						localDb(templateDb)
+					})
+			
+		})
+
+		////////////////////////////////////// BUDGET ///////////////////////////////////
+
+		$('#inp_harga').keypress(function (e) {
+			//HANYA BOLEH ANGKA DAN BACKSPACE
+			if ((e.which < 48 || e.which > 57) && e.which != 8) {
+				e.preventDefault()
+				return false
+			}
+
+			$('#inp_harga').keyup(function (e) {
+
+				let angka = ($(e.currentTarget).val()).replace(/\./g, "")
+				let hasil = rupiah(angka)
+				$(e.currentTarget).val(hasil)
+			})
+		})
+
+		function rupiah(nominal) {
+			let banyakSeparator = Math.floor(nominal.length / 3)
+			let banyakAngkaTerakhir = nominal.length - (banyakSeparator * 3)
+
+			let arr = []
+			for (let i = 1; i <= banyakSeparator; i++) {
+				arr.push(nominal.substr(-3 * i, 3))
+			}
+
+			arr.push(nominal.substr(0, banyakAngkaTerakhir))
+			let cleanArr = arr.filter((a) => a)
+			let hasil = cleanArr.reverse().join(".")
+			return hasil
+		}
+
+		$('#tambah_budget').click(function (e) {
+			if (nama_barang.value == "") {
+				$(nama_barang).focus()
+				return
+			} else if (inp_kuantitas.value == "") {
+				$(inp_kuantitas).focus()
+				return
+			} else if (inp_satuan.value == "") {
+				$(inp_satuan).focus()
+				return
+			} else if (inp_harga.value == "") {
+				$(inp_harga).focus()
+				return
+			}
+
+
+			$('#tabel_budget tbody').append(
+				`<tr>
+					<th scope="row">${$('#tabel_budget tbody tr').length + 1}</th>
+					<td>${nama_barang.value}</td>
+					<td>${inp_kuantitas.value}</td>
+					<td>${inp_satuan.value}</td>
+					<td>${inp_harga.value}</td>
+					<td>${((inp_harga.value).replace(/\./g, "") * inp_kuantitas.value).toLocaleString('id-ID')}</td>
+					<td class="text-center"><span onclick="hapusBudget(this)" type="button">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
+					<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+					<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+					</svg>
+				</span></td>
+				</tr>`
+			)
+
+			nama_barang.value = ""
+			inp_kuantitas.value = ""
+			inp_satuan.value = ""
+			inp_harga.value = ""
+		})
+
+		function hapusBudget(e) {
+			$(e).parents().remove('tr')
+			$('#tabel_budget tbody th').each(function (idx, item) {
+				$(item).text(idx + 1)
+			})
+		}
+
+		$(simpan_budget).click(function (e) {
+			if ($("#tabel_budget tbody tr").length == 0) {
+				$(nama_barang).focus()
+				return
+			}
+
+			let budgetObj = {
+				"uraian": [],
+				"total": ""
+			}
+
+
+			$("#tabel_budget tbody tr").each(function (idx, item) {
+				let namaBarjas = $(item).children().eq(1).text()
+				let kuantitas = $(item).children().eq(2).text()
+				let satuan = $(item).children().eq(3).text()
+				let hargaSatuan = $(item).children().eq(4).text()
+				let hargaTotal = $(item).children().eq(5).text()
+
+				let uraianBudget = { "id": "", "nama barjas": "", "kuantitas": "", "satuan": "", "harga satuan": "", "total": "" }
+
+				uraianBudget.id = idx
+				uraianBudget["nama barjas"] = namaBarjas
+				uraianBudget.kuantitas = kuantitas * 1
+				uraianBudget.satuan = satuan
+				uraianBudget["harga satuan"] = (hargaSatuan).replace(/\./g, "") * 1
+				uraianBudget.total = (hargaTotal).replace(/\./g, "") * 1
+
+				budgetObj.uraian.push(uraianBudget)
+			})
+
+			// budgetObj.total = budgetObj.uraian.reduce((val, item) => {
+			// 	return val + item.total
+			// }, 0)
+
+			budgetObj.total = budgetObj.uraian.reduce((total, num) => {
+				// console.log(num.total)
+				// let angka = (num.total).replace(/\./g, "")
+				return num.total + total
+			}, 0);
+
+			templateDb.budget = budgetObj
+			kirimDb(templateDb)
+				.then(res => {
+					console.log(res)
+					$(section_kegiatan).show("slow")
+				})
+		})
+
+		/////////////////////////////////// KEGIATAN /////////////////////////////////////
+		function hapusPersiapan(e) {
+			$(e).parent().remove()
+		}
+
+		function listKegiatan(namaKegiatan) {
+			let hasil = `<li class="list-group-item d-flex justify-content-between align-items-start list-kegiatan">
+					<div class="me-auto">
+						<span class="text-warning">
+							<i class="fa-solid fa-grip-vertical me-2"></i>
+						</span>
+						<input class="form-check-input me-1" type="checkbox" value="">
+						${namaKegiatan}
+						<span onclick="barjasTerpakai(this)" type="button">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="text-warning bi bi-plus-square" viewBox="0 0 16 16">
+							<path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+						</svg>
+						</span>
+					</div>
+					<span onclick="hapusPersiapan(this)" type="button">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-x-circle text-warning" viewBox="0 0 16 16">
+							<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+							<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+						</svg>
+					</span>
+				</li>`
+			return hasil
+		}
+
+		$(tambah_persiapan).click(function (e) {
+			$(list_persiapan).append(listKegiatan($(nama_persiapan).val()))
+			$(nama_persiapan).val("")
+		})
+
+		$(tambah_pelaksanaan).click(function (e) {
+			$(list_pelaksanaan).append(listKegiatan($(nama_pelaksanaan).val()))
+			$(nama_pelaksanaan).val("")
+		})
+
+		$(tambah_pelaporan).click(function (e) {
+			$(list_pelaporan).append(listKegiatan($(nama_pelaporan).val()))
+			$(nama_pelaporan).val("")
+		})
+
+		$(simpan_kegiatan).click(function (e) {
+			let persiapanObj = {
+				"id": "",
+				"nama kegiatan": "",
+				"barjas": [],
+				"total barjas": "",
+				"status": ""
+			}
+
+			let persiapanBarjasObj = { "idf": "", "dibutuhkan": "", "terpakai": "" }
+
+			persiapanBarjasObj.idf
+			persiapanBarjasObj.dibutuhkan
+			persiapanBarjasObj.terpakai
+
+			persiapanObj.id
+			persiapanObj["nama kegiatan"]
+			persiapanObj.barjas.push(persiapanBarjasObj)
+			persiapanObj["total barjas"]
+			persiapanObj.status
+		})
+
+		new Sortable(list_persiapan, {
+			animation: 150,
+			ghostClass: 'ghost'
+		});
+		new Sortable(list_pelaksanaan, {
+			animation: 150,
+			ghostClass: 'ghost'
+		});
+		new Sortable(list_pelaporan, {
+			animation: 150,
+			ghostClass: 'ghost'
+		});
+
+		function barjasTerpakai(e) {
+			const modalBarjasTerpakai = new bootstrap.Modal('#modal_barjas_terpakai')
+			modalBarjasTerpakai.show()
+
+			let local = JSON.parse(localStorage.getItem("proyek"))
+				(local.budget.uraian).map((item, idx) => {
+					return item["nama barjas"]
+				})
+		}
+
+		function localDb(data) {
+			let arrLocal = JSON.parse(localStorage.getItem('proyek'))
+
+			if (arrLocal) {
+				const index = arrLocal.findIndex(object => {
+					return object.id === id_project.value * 1
+				});
+
+				if (index !== -1) {
+					return arrLocal[index]
+				}
+			} else {
+				localStorage.setItem("proyek", JSON.stringify([data]))
+				return data
+			}
+		}
+
+		function kirimDb(data) {
+			return fetch(urlDb, {
+				method: "POST",
+				body: JSON.stringify(data)
+			}).then(res => {
+				return res.json()
+			})
+		}
+	</script>
+</body>
+
+</html>

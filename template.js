@@ -4,13 +4,16 @@ let db = []
 
 let templateDb = {
     "id": "",
+    "timestamp":"",
+    "bidang":"",
     "nama proyek": "",
+    "tanggal pelaksanaan":"",
     "panitia": [
-        // { "id": "", "nama": "" }
+        // { "id": "", "nama": "" , "posisi": ""}
     ],
     "budget": {
         "uraian": [
-            { "id": "", "nama barjas": "", "kuantitas": "", "satuan": "", "harga satuan": "", "total": "" },
+            // { "id": "", "nama barjas": "", "kuantitas": "", "satuan": "", "harga satuan": "", "total": "" },
         ],
         "total": ""
     },
