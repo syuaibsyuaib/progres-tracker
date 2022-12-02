@@ -87,7 +87,7 @@
 							<form id="kirim">
 								<!-- Email input -->
 								<div class="form-outline mb-4">
-									<label class="form-label" for="user">Email address</label>
+									<label class="form-label" for="user">Username</label>
 									<input type="text" id="user" class="form-control" />
 								</div>
 
@@ -112,9 +112,9 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 	<script src="https://kit.fontawesome.com/923e54134a.js" crossorigin="anonymous"></script>
 	<script>
-
+		localStorage.clear()
 		$(kirim).submit(function (e) {
-			// e.preventDefault()
+			e.preventDefault()
 			fetch("https://script.google.com/macros/s/AKfycbw-6436qjm4JSfLpfcC8KTQCIlkFaf5nDKnLaM_6OA9egn9ICfMXlqn9344RB1-euGe/exec", {
 				method: "post",
 				body: JSON.stringify({ username: user.value, password: pass.value })
